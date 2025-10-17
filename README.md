@@ -234,7 +234,7 @@ educonnect/
 
 ## Live Demo
 
-[Placeholder for live demo link]
+[COMING SOON]
 
 ## Contributing
 

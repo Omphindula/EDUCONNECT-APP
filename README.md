@@ -251,4 +251,4 @@ For questions or support, please open an issue in the GitHub repository.
 ---
 
 **EduConnect** - Empowering education, one lesson at a time. Aligned with SDG 4: Quality Education.
-# EDUCONNECT-APP
+

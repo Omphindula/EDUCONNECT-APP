@@ -1,0 +1,127 @@
+:root {
+  --primary-color: #0d6efd;
+  --secondary-color: #6c757d;
+  --success-color: #198754;
+  --danger-color: #dc3545;
+  --accent-color: #ffe066;
+  --soft-bg: #f4f8fb;
+  --card-radius: 1.25rem;
+  --shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--soft-bg);
+  color: #222;
+}
+
+main {
+  flex: 1;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #ffe066 100%);
+  color: #222;
+  padding: 60px 0 40px 0;
+  border-radius: 0 0 2rem 2rem;
+  box-shadow: var(--shadow);
+}
+
+.hero-section h1 {
+  color: #222;
+  text-shadow: 0 2px 8px rgba(255,255,255,0.2);
+}
+
+.hero-section .lead {
+  color: #444;
+  font-size: 1.25rem;
+}
+
+.min-vh-75 {
+  min-height: 75vh;
+}
+
+.feature-icon {
+  font-size: 1.5rem;
+  background: var(--accent-color);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  border: 2px solid #fff;
+}
+
+.card {
+  transition: transform 0.2s, box-shadow 0.2s;
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow);
+  border: none;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.navbar-brand img {
+  filter: none;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 2px;
+}
+
+footer {
+  margin-top: auto;
+  background: #fff;
+  border-top: 1px solid #eee;
+  padding: 1.5rem 0 0.5rem 0;
+  color: #888;
+  text-align: center;
+}
+
+.lesson-content {
+  line-height: 1.8;
+  font-size: 1.05rem;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+.badge {
+  padding: 0.5em 0.75em;
+  font-size: 0.875rem;
+  border-radius: 0.75em;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+/* Buttons */
+.btn-primary, .btn-outline-primary {
+  border-radius: 2em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow: 0 2px 8px rgba(13,110,253,0.08);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #667eea 0%, #0d6efd 100%);
+  border: none;
+}
+
+.btn-outline-primary {
+  color: #0d6efd;
+  border: 2px solid #0d6efd;
+  background: #fff;
+}
+
+.btn-primary:hover, .btn-outline-primary:hover {
+  filter: brightness(0.95);
+  box-shadow: 0 4px 16px rgba(13,110,253,0.12);
+}

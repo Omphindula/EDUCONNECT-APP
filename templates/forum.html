@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Discussion Forum - EduConnect{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="fw-bold mb-4">Discussion Forum</h2>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3">Start a Discussion</h5>
+                    <form method="POST" action="{{ url_for('post_discussion') }}">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" name="topic" placeholder="Discussion Topic" required>
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" name="message" rows="3" placeholder="Your message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Post Discussion</button>
+                    </form>
+                </div>
+            </div>
+
+            <h4 class="fw-bold mb-3">Recent Discussions</h4>
+            {% if discussions %}
+                {% for discussion in discussions %}
+                <div class="card shadow-sm mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ discussion.topic }}</h5>
+                        <p class="card-text">{{ discussion.message }}</p>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <small class="text-muted">
+                                Posted by {{ discussion.user_name }} ({{ discussion.role }}) | 
+                                {{ discussion.created_at.strftime('%B %d, %Y at %I:%M %p') }}
+                            </small>
+                        </div>
+                        <!-- Comments Section -->
+                        <div class="ms-3">
+                            <h6 class="fw-bold">Comments</h6>
+                            {% set comments = comments_by_discussion.get(discussion.id, []) %}
+                            {% macro render_comments(comments, parent_id=None, level=0) %}
+                                {% for comment in comments if comment.parent_id == parent_id %}
+                                    <li class="mb-2 ms-{{ level * 3 }}">
+                                        <div class="border rounded p-2 bg-light">
+                                            <span class="fw-semibold">{{ comment.user_name }}</span> <span class="text-muted small">({{ comment.role }})</span>:
+                                            {{ comment.message }}
+                                            <div class="text-muted small">{{ comment.created_at.strftime('%b %d, %Y %I:%M %p') }}</div>
+                                            <!-- Reply form -->
+                                            <form method="POST" action="{{ url_for('post_comment') }}" class="mt-2">
+                                                <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+                                                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                                                <div class="input-group">
+                                                    <input type="text" name="message" class="form-control form-control-sm" placeholder="Reply..." required>
+                                                    <button type="submit" class="btn btn-sm btn-outline-secondary">Reply</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        {% set has_replies = comments|selectattr('parent_id', 'equalto', comment.id)|list|length > 0 %}
+                                        {% if has_replies %}
+                                            <ul class="list-unstyled ms-3">
+                                                {{ render_comments(comments, comment.id, level+1) }}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            {% endmacro %}
+                            {% if comments %}
+                                <ul class="list-unstyled">
+                                    {{ render_comments(comments) }}
+                                </ul>
+                            {% else %}
+                                <div class="text-muted small">No comments yet.</div>
+                            {% endif %}
+                            <!-- Add Comment Form (top-level) -->
+                            <form method="POST" action="{{ url_for('post_comment') }}" class="mt-2">
+                                <input type="hidden" name="discussion_id" value="{{ discussion.id }}">
+                                <div class="input-group">
+                                    <input type="text" name="message" class="form-control form-control-sm" placeholder="Add a comment..." required>
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">Comment</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p class="text-muted text-center py-4">No discussions yet. Be the first to start one!</p>
+            {% endif %}
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="fw-bold mb-3">Forum Guidelines</h5>
+                    <ul class="small">
+                        <li>Be respectful to all members</li>
+                        <li>Stay on topic</li>
+                        <li>Share knowledge and help others</li>
+                        <li>Ask questions freely</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

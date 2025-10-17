@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}My Progress - EduConnect{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="fw-bold mb-4">My Learning Progress</h2>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if progress %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Lesson Title</th>
+                                <th>Status</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in progress %}
+                            <tr>
+                                <td class="fw-bold">{{ item.title }}</td>
+                                <td>
+                                    {% if item.status == 'completed' %}
+                                        <span class="badge bg-success">Completed</span>
+                                    {% else %}
+                                        <span class="badge bg-warning">In Progress</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ item.updated_at.strftime('%B %d, %Y') }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-muted text-center py-4">No progress recorded yet. Start learning to track your progress!</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
